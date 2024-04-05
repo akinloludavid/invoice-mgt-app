@@ -17,10 +17,7 @@ export const paymentTerms = [
     },
 ]
 export const status = [
-    {
-        label: 'Draft',
-        value: 'draft',
-    },
+
     {
         label: 'Pending',
         value: 'pending',

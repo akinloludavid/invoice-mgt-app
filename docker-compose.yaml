@@ -2,7 +2,7 @@ version: "3.8"
 services:
   incsub-assessment:
     build: ./
-    container_name: incsub-assessment-container
+    container_name: edubanc-frontend-assessment
     ports:
       - "8080:8080"
     volumes:

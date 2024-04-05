@@ -25,7 +25,6 @@ export default function Home() {
     const [statusValue, setStatusValue] = useState<IStatus>('')
 
     const invoiceLists = getAllInvoices(statusValue)
-    console.log(invoiceLists)
     const boldTextColor = useColorModeValue('#0C0E16', '#ffffff')
     const lightTextColor = useColorModeValue(
         'lightMode.textColor',
@@ -43,7 +42,6 @@ export default function Home() {
                 <Box>
                     <Heading
                         color={boldTextColor}
-                        // fontSize={["20px"]}
                         variant={['h2', 'h1']}
                         as='h1'
                         mb='8px'
@@ -98,7 +96,6 @@ export default function Home() {
                 </Flex>
             </Flex>
             <Box>
-                {/* {<TableLoader />} */}
                 {invoiceLists?.length === 0 && (
                     <Flex
                         justify={'center'}

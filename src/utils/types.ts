@@ -25,7 +25,7 @@ export interface IFormList {
 
 export interface InvoiceType {
     id?: string
-    createdAt?: string
+    createdAt: string | number | Date
     paymentDue: string
     description: string
     paymentTerms: 1
@@ -43,6 +43,11 @@ export interface InvoiceType {
         city: string
         postCode: string
         country: string
+    }
+    paymentDetails: {
+        bankAccountNumber: string | number
+        bankName: string
+        accountName: string
     }
     items: IFormList[]
     total?: string | number

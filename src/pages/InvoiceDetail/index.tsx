@@ -17,10 +17,11 @@ import { nanoid } from 'nanoid'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getInvoiceById, markAsPaid } from '../../api'
 import { useCustomToast } from '../../customHooks/notifications'
+import { generatePDF } from '../../utils/helper'
 const InvoiceDetails = () => {
     const navigate = useNavigate()
     const { successAlert } = useCustomToast()
-    const { invoiceId: id } = useParams()
+    const { invoiceId: id = '' } = useParams()
     const invoice: InvoiceType = getInvoiceById(id)
     const [isOpen, setIsOpen] = useState(false)
     const { isMobile } = useCustomMediaQuery()
@@ -98,6 +99,13 @@ const InvoiceDetails = () => {
                                 Delete
                             </Button>
                             <Button
+                                onClick={() =>
+                                    generatePDF(`invoice-${invoice.id}`)
+                                }
+                            >
+                                Download as pdf
+                            </Button>
+                            <Button
                                 onClick={() => handleMarkAsPaid(invoice)}
                                 _hover={{}}
                                 _disabled={{
@@ -114,6 +122,7 @@ const InvoiceDetails = () => {
                         p={['24px', '32px', '48px']}
                         flexDirection={['column']}
                         borderRadius={'8px'}
+                        id={`invoice-${invoice.id}`}
                     >
                         <Flex
                             justify={['space-between']}
@@ -175,7 +184,16 @@ const InvoiceDetails = () => {
                                 </Text>
                             </Box>
                         </Flex>
-                        <Flex gap={['32px', '41px', '100px']} flexWrap='wrap'>
+                        <Grid
+                            templateColumns={[
+                                'repeat(1,1fr)',
+                                'repeat(2,1fr)',
+                                'repeat(3,1fr)',
+                            ]}
+                            gap={['32px', '41px', '100px']}
+                            justifyContent='space-between'
+                            flexWrap='wrap'
+                        >
                             <Box>
                                 <Text color={statusColor} mb={['12px']}>
                                     Invoice Date
@@ -241,13 +259,47 @@ const InvoiceDetails = () => {
                             </Box>
                             <Box>
                                 <Text color={statusColor} mb={['12px']}>
+                                    Payment Details
+                                </Text>
+                                <Text
+                                    color={boldTextColor}
+                                    variant='bold'
+                                    mb={['8px']}
+                                >
+                                    {invoice?.paymentDetails?.accountName}
+                                </Text>
+                                <Box
+                                    h={['75px']}
+                                    display='flex'
+                                    flexDirection={'column'}
+                                    gap='5px'
+                                >
+                                    <Text
+                                        color={statusColor}
+                                        textAlign={'left'}
+                                    >
+                                        {
+                                            invoice?.paymentDetails
+                                                ?.bankAccountNumber
+                                        }
+                                    </Text>
+                                    <Text
+                                        color={statusColor}
+                                        textAlign={'left'}
+                                    >
+                                        {invoice?.paymentDetails?.bankName}
+                                    </Text>
+                                </Box>
+                            </Box>
+                            <Box>
+                                <Text color={statusColor} mb={['12px']}>
                                     Sent To
                                 </Text>
                                 <Text color={boldTextColor} variant={'bold'}>
                                     {invoice?.clientEmail || 'N/A'}
                                 </Text>
                             </Box>
-                        </Flex>
+                        </Grid>
                         <Box
                             bgColor={tableBgColor}
                             mt={['45px']}

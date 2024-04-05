@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import {
     Box,
     Button,
@@ -32,7 +32,6 @@ const CreateInvoice = () => {
     const formBgColor = useColorModeValue('#ffffff', '#141625')
     const statusColor = useColorModeValue('#858BB2', '#DFE3FA')
     const placeHolderColor = useColorModeValue('#0C0E1640', '#ffffff')
-    const draftColor = useColorModeValue('#888EB0', '#DFE3FA')
     const borderColor = useColorModeValue(
         '1px solid #DFE3FA',
         '1px solid #252945',
@@ -41,15 +40,7 @@ const CreateInvoice = () => {
     const { successAlert } = useCustomToast()
     const errorBorder = '1px solid #EC5757'
     const [formArray, setFormArray] = useState<IFormList[]>([])
-    const boxRef: any = useRef(null)
-    // const handleHideCreateForm = (e: SyntheticEvent) => {
-    //     const currentTarget = e.currentTarget
-    //     setTimeout(() => {
-    //         if (!currentTarget.contains(document.activeElement)) {
-    //             setShowCreateInvoice(false)
-    //         }
-    //     }, 0)
-    // }
+
     const initialValues = {
         billFromStreetAddress: '',
         billFromCity: '',
@@ -64,6 +55,9 @@ const CreateInvoice = () => {
         invoiceDate: '',
         paymentTerms: '',
         projectDescription: '',
+        bankName: '',
+        bankAccountNumber: '',
+        accountName: '',
     }
     const validationSchema = Yup.object().shape({
         clientName: Yup.string().required("can't be empty"),
@@ -79,6 +73,9 @@ const CreateInvoice = () => {
         billToCity: Yup.string().required("can't be empty"),
         billToPostCode: Yup.string().required("can't be empty"),
         billToCountry: Yup.string().required("can't be empty"),
+        bankName: Yup.string().required("can't be empty"),
+        bankAccountNumber: Yup.string().required("can't be empty"),
+        accountName: Yup.string().required("can't be empty"),
     })
     const handleSubmit = async (values: any) => {
         const formValues: InvoiceType = {
@@ -94,6 +91,11 @@ const CreateInvoice = () => {
                 postCode: values.billToPostCode,
                 country: values.billToCountry,
             },
+            paymentDetails: {
+                bankAccountNumber: values.bankAccountNumber,
+                bankName: values.bankName,
+                accountName: values.accountName,
+            },
             clientName: values.clientName,
             clientEmail: values.clientEmail,
             description: values.projectDescription,
@@ -102,6 +104,7 @@ const CreateInvoice = () => {
             items: formArray,
             total: formArray.reduce((acc, curr) => acc + Number(curr.total), 0),
             status: 'pending',
+            createdAt: new Date().toLocaleDateString(),
         }
         createInvoice(formValues)
         successAlert('Created invoice successfully')
@@ -139,66 +142,16 @@ const CreateInvoice = () => {
 
         setFormArray(newFormArray)
     }
-    // const handleSaveAsDraft = async (values: any) => {
-    //     const formValues: InvoiceType = {
-    //         senderAddress: {
-    //             street: values.billFromStreetAddress,
-    //             city: values.billFromCity,
-    //             postCode: values.billFromPostCode,
-    //             country: values.billFromCountry,
-    //         },
-    //         clientAddress: {
-    //             street: values.billToStreetAddress,
-    //             city: values.billToCity,
-    //             postCode: values.billToPostCode,
-    //             country: values.billToCountry,
-    //         },
-    //         clientName: values.clientName,
-    //         clientEmail: values.clientEmail,
-    //         description: values.projectDescription,
-    //         paymentTerms: values.paymentTerms,
-    //         paymentDue: values.invoiceDate,
-    //         items: formArray,
-    //         total: formArray.reduce((acc, curr) => acc + Number(curr.total), 0),
-    //         status: 'draft',
-    //     }
-    //     mutateSaveInvoiceAsDraft(formValues, {
-    //         onSuccess: () => {
-    //             successAlert('Invoice created successfully')
-    //             setTimeout(() => {
-    //                 setShowCreateInvoice(false)
-    //             }, 2000)
-    //         },
-    //         onError: (error: any) => {
-    //             errorAlert('Sorry error occurred')
-    //             console.log(error.message)
-    //         },
-    //     })
-    // }
-    useEffect(() => {
-        boxRef.current?.focus()
-    }, [])
+
     return (
-        <Box
-            w={['100%', '100%', '100vw']}
-            h={['full', 'full', '100vh']}
-            // position='fixed'
-            // left={[0, 0, 0, '103px', '103px']}
-            // top={['80px', '80px', '80px', '0px']}
-            bgColor='#00000030'
-            zIndex={'999999'}
-        >
+        <Box w={['100%']} h={['full']} bgColor='#00000030'>
             <Box
-                w={['100%', '480px', '616px', '720px']}
-                px={['24px', '56px']}
+                w={['100%']}
+                px={['0', '56px']}
+                pt={['80px', '80px', '80px', '0']}
                 outline='none'
                 overflowY='scroll'
-                h={['90vh', '90vh', '90vh', '100vh']}
                 bgColor={formBgColor}
-                borderRadius={['0', '0 20px 20px 0']}
-                tabIndex={1}
-                // onBlur={handleHideCreateForm}
-                ref={boxRef}
             >
                 <Button
                     mt={['32px']}
@@ -210,9 +163,9 @@ const CreateInvoice = () => {
                     bgColor='transparent'
                     leftIcon={<MdChevronLeft color='#7C5DFA' />}
                     w='fit-content'
-                    onClick={() => navigate(`/`)}
-                    gap='24px'
-                    display={['flex', 'none']}
+                    onClick={() => navigate(-1)}
+                    gap='16px'
+                    display={['flex']}
                 >
                     Go Back
                 </Button>
@@ -222,8 +175,9 @@ const CreateInvoice = () => {
                     lineHeight={'32px'}
                     color={boldTextColor}
                     mb={['48px']}
-                    mt={['24px', '56px']}
+                    mt={['24px']}
                     as='h2'
+                    data-testid='create-invoice-heading'
                 >
                     New Invoice
                 </Heading>
@@ -238,7 +192,6 @@ const CreateInvoice = () => {
                             values,
                             errors,
                             touched,
-                            isValid,
                             handleBlur,
                             handleChange,
                         }) => (
@@ -439,7 +392,153 @@ const CreateInvoice = () => {
                                         </FormControl>
                                     </GridItem>
                                 </Grid>
-
+                                <Heading
+                                    variant={'h4'}
+                                    as='h4'
+                                    color='#7C5DFA'
+                                    mb='24px'
+                                >
+                                    Payment Details
+                                </Heading>
+                                <Grid
+                                    templateColumns={['repeat(2,1fr)']}
+                                    mb={['48px']}
+                                    gap={['24px']}
+                                    w={['100%']}
+                                >
+                                    <GridItem colSpan={2}>
+                                        <FormControl>
+                                            <Flex justify={'space-between'}>
+                                                <FormLabel
+                                                    color={
+                                                        touched.accountName &&
+                                                        errors.accountName
+                                                            ? 'error'
+                                                            : statusColor
+                                                    }
+                                                >
+                                                    Account Name
+                                                </FormLabel>
+                                                {touched.accountName &&
+                                                errors.accountName ? (
+                                                    <ErrorMessage
+                                                        name='accountName'
+                                                        render={msg => (
+                                                            <Text color='error'>
+                                                                {msg}
+                                                            </Text>
+                                                        )}
+                                                    />
+                                                ) : null}
+                                            </Flex>
+                                            <Input
+                                                border={
+                                                    touched.accountName &&
+                                                    errors.accountName
+                                                        ? errorBorder
+                                                        : borderColor
+                                                }
+                                                color={boldTextColor}
+                                                _placeholder={{
+                                                    color: placeHolderColor,
+                                                }}
+                                                w={['100%']}
+                                                name='accountName'
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                value={values.accountName}
+                                            />
+                                        </FormControl>
+                                    </GridItem>
+                                    <GridItem colSpan={1}>
+                                        <FormControl>
+                                            <Flex justify={'space-between'}>
+                                                <FormLabel
+                                                    color={
+                                                        touched.bankName &&
+                                                        errors.bankName
+                                                            ? 'error'
+                                                            : statusColor
+                                                    }
+                                                >
+                                                    Bank Name
+                                                </FormLabel>
+                                                {touched.bankName &&
+                                                    errors.bankName && (
+                                                        <ErrorMessage
+                                                            name='bankName'
+                                                            render={msg => (
+                                                                <Text color='error'>
+                                                                    {msg}
+                                                                </Text>
+                                                            )}
+                                                        />
+                                                    )}
+                                            </Flex>
+                                            <Input
+                                                color={boldTextColor}
+                                                _placeholder={{
+                                                    color: placeHolderColor,
+                                                }}
+                                                border={
+                                                    touched.bankName &&
+                                                    errors.bankName
+                                                        ? errorBorder
+                                                        : borderColor
+                                                }
+                                                w={['100%']}
+                                                name='bankName'
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                value={values.bankName}
+                                            />
+                                        </FormControl>
+                                    </GridItem>
+                                    <GridItem colSpan={1}>
+                                        <FormControl>
+                                            <Flex justify={'space-between'}>
+                                                <FormLabel
+                                                    color={
+                                                        touched.bankAccountNumber &&
+                                                        errors.bankAccountNumber
+                                                            ? 'error'
+                                                            : statusColor
+                                                    }
+                                                >
+                                                    Account Number
+                                                </FormLabel>
+                                                {touched.bankAccountNumber &&
+                                                    errors.bankAccountNumber && (
+                                                        <ErrorMessage
+                                                            name='bankAccountNumber'
+                                                            render={msg => (
+                                                                <Text color='error'>
+                                                                    {msg}
+                                                                </Text>
+                                                            )}
+                                                        />
+                                                    )}
+                                            </Flex>
+                                            <Input
+                                                color={boldTextColor}
+                                                _placeholder={{
+                                                    color: placeHolderColor,
+                                                }}
+                                                border={
+                                                    touched.bankAccountNumber &&
+                                                    errors.bankAccountNumber
+                                                        ? errorBorder
+                                                        : borderColor
+                                                }
+                                                w={['100%']}
+                                                name='bankAccountNumber'
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                value={values.bankAccountNumber}
+                                            />
+                                        </FormControl>
+                                    </GridItem>
+                                </Grid>
                                 <Heading
                                     variant={'h4'}
                                     as='h4'
@@ -1056,32 +1155,17 @@ const CreateInvoice = () => {
                                     >
                                         Discard
                                     </Button>
-                                    <Button
-                                        display={'none'}
-                                        ml='auto'
-                                        bgColor={'#373B53'}
-                                        _hover={{}}
-                                        color={draftColor}
-                                        isDisabled={!isValid}
-                                        // isLoading={isDraftInvoiceLoading}
-                                        _disabled={{
-                                            bgColor: 'gray',
-                                            cursor: 'not-allowed',
-                                        }}
-                                    >
-                                        Save as Draft
-                                    </Button>
+
                                     <Button
                                         type='submit'
-                                        // isDisabled={isCreateInvoiceLoading}
-                                        // isLoading={isCreateInvoiceLoading}
                                         _disabled={{
                                             bgColor: 'gray',
                                             cursor: 'not-allowed',
                                         }}
                                         _hover={{}}
+                                        data-testid='save-new-invoice'
                                     >
-                                        Save & Send
+                                        Save
                                     </Button>
                                 </Flex>
                             </form>

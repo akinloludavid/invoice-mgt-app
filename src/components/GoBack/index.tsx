@@ -19,7 +19,8 @@ const GoBack = () => {
             bgColor='transparent'
             leftIcon={<MdChevronLeft color='#7C5DFA' />}
             onClick={goBack}
-            gap='24px'
+            gap='16px'
+            data-testid='go-back'
         >
             Go Back
         </Button>

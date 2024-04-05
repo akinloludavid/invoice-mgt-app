@@ -8,8 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { MdDarkMode, MdLightMode } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
-// import logo from '../../assets/logo.svg'
-// import userIcon from '../../assets/image-avatar.jpg'
+
 const SideBar = () => {
     const navigate = useNavigate()
     const colorModeIcon = useColorModeValue(MdLightMode, MdDarkMode)
@@ -24,7 +23,7 @@ const SideBar = () => {
             w={['100%', '100%', '100vw', '103px', '103px']}
             left='0'
             top='0'
-            position={'absolute'}
+            position={'fixed'}
             borderRadius={[
                 '0px',
                 '0px',

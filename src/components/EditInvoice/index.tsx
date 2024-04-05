@@ -24,7 +24,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useCustomToast } from '../../customHooks/notifications'
 
 const EditInvoice = () => {
-    const { invoiceId } = useParams()
+    const { invoiceId = '' } = useParams()
     const invoice = getInvoiceById(invoiceId)
     const navigate = useNavigate()
     const { successAlert } = useCustomToast()
@@ -110,7 +110,7 @@ const EditInvoice = () => {
         ])
     }
     const removeFromList = (idx: number) => {
-        const newFormList = formArray.filter((_, index) => idx !== index)
+        const newFormList = formArray?.filter((_, index) => idx !== index)
         setFormArray(newFormList)
     }
     const handleFormArrayChange = (
@@ -133,20 +133,12 @@ const EditInvoice = () => {
 
         setFormArray(newFormArray)
     }
-    console.log(formArray)
 
     return (
-        <Box
-            w={['100%', '100%', '100vw']}
-            outline='none'
-            h={['full', 'full', '100vh']}
-            bgColor='#00000030'
-        >
+        <Box w={'100%'} outline='none' h={'full'} bgColor='#00000030'>
             <Box
-                w={['100%', '540px', '616px', '720px']}
-                px={['24px', '56px']}
+                px={['0', '56px']}
                 overflowY='scroll'
-                h={['90vh', '90vh', '90vh', '100vh']}
                 bgColor={formBgColor}
                 borderRadius='0 20px 20px 0'
                 tabIndex={1}
@@ -159,8 +151,9 @@ const EditInvoice = () => {
                     mb={['48px']}
                     mt={['56px']}
                     as='h2'
+                    data-testid='edit-invoice-heading'
                 >
-                    Edit{' '}
+                    Edit
                     <Text
                         color='#888EB0'
                         fontWeight={'700'}
@@ -1010,6 +1003,7 @@ const EditInvoice = () => {
                                             cursor: 'not-allowed',
                                         }}
                                         _hover={{}}
+                                        data-testid='save-edit-invoice'
                                     >
                                         Save Changes
                                     </Button>

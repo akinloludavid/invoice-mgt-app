@@ -10,7 +10,6 @@ export const getInvoiceById = (id: string) => {
 
 export const getAllInvoices = (status: IStatus = '') => {
     const allInvoices = (getLocalStorage(INVOICES_KEY) as InvoiceType[]) || []
-    console.log(allInvoices)
     if (status) {
         return allInvoices.filter(invoice => invoice.status === status)
     }
@@ -33,7 +32,6 @@ export const markAsPaid = (body: InvoiceType) => {
     ) as InvoiceType[]
 
     const invoice = allInvoices.find(invoice => invoice.id === body.id)
-    console.log({ invoice })
     setLocalStorage(INVOICES_KEY, updatedInvoices)
     return invoice
 }
@@ -50,12 +48,11 @@ export const updateInvoice = async (body: InvoiceType) => {
     return invoice
 }
 
-export const createInvoice = async (body: InvoiceType) => {
+export const createInvoice = (body: InvoiceType) => {
     const allInvoices = [
         ...getAllInvoices(),
         {
             ...body,
-            createdAt: new Date().toLocaleDateString(),
             id: getRandomId(),
         },
     ]

@@ -9,9 +9,10 @@ const LazyLoader = () => {
             w='100%'
             h='100vh'
             flexDir={['column']}
+            gap='24px'
         >
-            <Spinner color='white' />
-            <Heading variant={'h2'} fontSize={['24px', '32px', '48px']}>
+            <Spinner color='pryColor' />
+            <Heading variant={'h2'} fontSize={['32px']}>
                 Loading...
             </Heading>
         </Flex>
