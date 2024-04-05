@@ -86,7 +86,7 @@ const InvoiceListComp = (props: any) => {
                             variant={'body1'}
                             color={boldTextColor}
                         >
-                            £{total}
+                            £{total.toLocaleString()}
                         </Text>
                     </GridItem>
                     <GridItem colSpan={2} colStart={[3, 0]}>
@@ -153,7 +153,7 @@ const InvoiceListComp = (props: any) => {
                             variant={'body1'}
                             color={boldTextColor}
                         >
-                            £{total}
+                            £{total.toLocaleString()}
                         </Text>
                     </GridItem>
                     <GridItem colSpan={2}>

@@ -379,7 +379,7 @@ const InvoiceDetails = () => {
                                                 fontWeight={'700'}
                                                 textAlign='right'
                                             >
-                                                £{item.total}
+                                                £{item.total.toLocaleString()}
                                             </Text>
                                         </Box>
                                     </Flex>
@@ -430,7 +430,8 @@ const InvoiceDetails = () => {
                                                     fontWeight={'700'}
                                                     textAlign='right'
                                                 >
-                                                    £{item.total}
+                                                    £
+                                                    {item.total.toLocaleString()}
                                                 </Text>
                                             </GridItem>
                                         </Grid>
@@ -455,7 +456,7 @@ const InvoiceDetails = () => {
                                 lineHeight={'32px'}
                                 color='#fff'
                             >
-                                £{invoice?.total}
+                                £{invoice?.total?.toLocaleString()}
                             </Text>
                         </Flex>
                     </Flex>

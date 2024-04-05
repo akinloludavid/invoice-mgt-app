@@ -121,6 +121,17 @@ const EditInvoice = () => {
         const newFormArray = formArray
             .map((el, idx) => {
                 if (idx === index) {
+                  if (
+                      currentInputName === 'quantity' ||
+                      currentInputName === 'price'
+                  ) {
+                      return {
+                          ...el,
+                          [currentInputName]: isNaN(Number(e.target.value))
+                              ? ''
+                              : e.target.value,
+                      }
+                  }
                     return {
                         ...el,
                         [currentInputName]: e.target.value,
