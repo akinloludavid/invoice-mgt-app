@@ -1,4 +1,4 @@
-# edubanc-assessment-2
+# edubanc-assessment
 
 Created with 
     React - JS Library
