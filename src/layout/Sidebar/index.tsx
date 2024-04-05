@@ -8,7 +8,6 @@ import {
 } from '@chakra-ui/react'
 import { MdDarkMode, MdLightMode } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
-import { Logo, UserIcon } from '../../assets'
 
 const SideBar = () => {
     const navigate = useNavigate()
@@ -51,7 +50,7 @@ const SideBar = () => {
                 <Image
                     zIndex={'999'}
                     w={['40px']}
-                    src={Logo}
+                    src={'/assets/logo.svg'}
                     alt='invoice app logo'
                     onClick={() => navigate('/')}
                     cursor={'pointer'}
@@ -87,7 +86,7 @@ const SideBar = () => {
                     cursor={'pointer'}
                 />
                 <Image
-                    src={UserIcon}
+                    src={'/assets/image-avatar.jpg'}
                     alt='user icon'
                     w={['40px']}
                     h={['40px']}
