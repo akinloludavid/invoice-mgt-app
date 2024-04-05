@@ -9,6 +9,7 @@ import {
     Flex,
     Grid,
     GridItem,
+    Heading,
     Text,
     useColorModeValue,
 } from '@chakra-ui/react'
@@ -48,6 +49,22 @@ const InvoiceDetails = () => {
         }, 2000)
     }
 
+    if (!invoice) {
+        return (
+            <Flex
+                flexDirection='column'
+                mx='auto'
+                my='auto'
+                h='100vh'
+                justify={'center'}
+                align='center'
+            >
+                <Heading>Error</Heading>
+                <Text>Invoice Not Found</Text>
+                <GoBack />
+            </Flex>
+        )
+    }
     return (
         <>
             <Box pt={['126px', '126px', '126px', '72px', '72px']} pb={['54px']}>
