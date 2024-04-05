@@ -24,6 +24,11 @@ const SideBar = () => {
             left='0'
             top='0'
             position={'fixed'}
+            sx={{
+                '@media screen and (min-width: 1441px)': {
+                    position: 'absolute',
+                },
+            }}
             borderRadius={[
                 '0px',
                 '0px',

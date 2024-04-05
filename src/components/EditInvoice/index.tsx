@@ -22,6 +22,7 @@ import { paymentTerms } from '../../utils/data'
 import { getInvoiceById, updateInvoice } from '../../api'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCustomToast } from '../../customHooks/notifications'
+import GoBack from '../GoBack'
 
 const EditInvoice = () => {
     const { invoiceId = '' } = useParams()
@@ -121,17 +122,17 @@ const EditInvoice = () => {
         const newFormArray = formArray
             .map((el, idx) => {
                 if (idx === index) {
-                  if (
-                      currentInputName === 'quantity' ||
-                      currentInputName === 'price'
-                  ) {
-                      return {
-                          ...el,
-                          [currentInputName]: isNaN(Number(e.target.value))
-                              ? ''
-                              : e.target.value,
-                      }
-                  }
+                    if (
+                        currentInputName === 'quantity' ||
+                        currentInputName === 'price'
+                    ) {
+                        return {
+                            ...el,
+                            [currentInputName]: isNaN(Number(e.target.value))
+                                ? ''
+                                : e.target.value,
+                        }
+                    }
                     return {
                         ...el,
                         [currentInputName]: e.target.value,
@@ -143,6 +144,23 @@ const EditInvoice = () => {
             .map(el => ({ ...el, total: +el.price * +el.quantity }))
 
         setFormArray(newFormArray)
+    }
+
+    if (!invoice) {
+        return (
+            <Flex
+                flexDirection='column'
+                mx='auto'
+                my='auto'
+                h='100vh'
+                justify={'center'}
+                align='center'
+            >
+                <Heading>Error</Heading>
+                <Text>Invoice Not Found</Text>
+                <GoBack />
+            </Flex>
+        )
     }
 
     return (
@@ -160,7 +178,7 @@ const EditInvoice = () => {
                     lineHeight={'32px'}
                     color={boldTextColor}
                     mb={['48px']}
-                    mt={['56px']}
+                    mt={['120px', '120px', '120px', '56px']}
                     as='h2'
                     data-testid='edit-invoice-heading'
                 >
