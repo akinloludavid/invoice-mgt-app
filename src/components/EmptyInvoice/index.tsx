@@ -1,14 +1,12 @@
 import React from 'react'
 import { Image, Box, Heading, Text, useColorModeValue } from '@chakra-ui/react'
+import { IllustrationEmpty } from '../../assets'
 const EmptyInvoice = () => {
     const boldTextColor = useColorModeValue('#0C0E16', '#ffffff')
 
     return (
         <Box maxW={['220px']}>
-            <Image
-                src='/assets/illustration-empty.svg'
-                alt='empty invoice list'
-            />
+            <Image src={IllustrationEmpty} alt='empty invoice list' />
             <Heading
                 variant={'h2'}
                 as='h2'

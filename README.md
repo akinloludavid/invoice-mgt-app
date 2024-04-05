@@ -1,15 +1,18 @@
-# incsub-assessment-2
+# edubanc-assessment-2
+
+Created with 
+    React - JS Library
+    Typescript - Language
+    Webpack - Build
+    Babel
+    ChakraUI - CSS Library
+    Formik/Yup - Form Validation
 
 To run locally:
 
     If you have node installed on your system, use:
-  
-    npm run start
-  
-You can also run with docker: 
 
-    docker build -t image-name .
-  
-    docker run -dp 8080:8080 image-name 
+    npm install
+    npm run dev
 
-deployed version: https://akinlolu-incsub-2.netlify.app/
+deployed version: https://invoice-mgt-app.netlify.app/
