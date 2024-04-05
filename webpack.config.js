@@ -1,11 +1,12 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require('webpack')
 module.exports = {
   entry: "./src/index.tsx",
   output: {
     path: path.join(__dirname, "/dist"),
     filename: "bundle.js",
-    publicPath: 'http://localhost:8080/'
+    publicPath: process.env.BASE_URL
 
   },
   devServer: {
@@ -54,6 +55,9 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env),
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),

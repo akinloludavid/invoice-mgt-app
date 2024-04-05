@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  incsub-assessment:
+  edubanc-assessment:
     build: ./
     container_name: edubanc-frontend-assessment
     ports:
