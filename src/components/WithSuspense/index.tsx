@@ -1,4 +1,4 @@
-import { Flex, Heading, Spinner } from '@chakra-ui/react'
+import { Flex, Heading, Spinner, useColorModeValue } from '@chakra-ui/react'
 import React, { Suspense } from 'react'
 
 const LazyLoader = () => {
@@ -12,7 +12,11 @@ const LazyLoader = () => {
             gap='24px'
         >
             <Spinner color='pryColor' />
-            <Heading variant={'h2'} fontSize={['32px']}>
+            <Heading
+                color={useColorModeValue('pryColor', 'white')}
+                variant={'h2'}
+                fontSize={['32px']}
+            >
                 Loading...
             </Heading>
         </Flex>
