@@ -48,7 +48,34 @@ const InvoiceDetails = () => {
             navigate(`/`)
         }, 2000)
     }
-
+    const ButtonGroup = () => {
+        return (
+            <>
+                <Button
+                    variant={'secondary'}
+                    onClick={() => navigate(`/edit/invoice/${invoice.id}`)}
+                >
+                    Edit
+                </Button>
+                <Button variant='delete' onClick={() => setIsOpen(true)}>
+                    Delete
+                </Button>
+                <Button onClick={() => generatePDF(`invoice-${invoice.id}`)}>
+                    Save as pdf
+                </Button>
+                <Button
+                    onClick={() => handleMarkAsPaid(invoice)}
+                    _hover={{}}
+                    _disabled={{
+                        bgColor: 'gray',
+                        cursor: 'not-allowed',
+                    }}
+                >
+                    Mark as Paid
+                </Button>
+            </>
+        )
+    }
     if (!invoice) {
         return (
             <Flex
@@ -67,7 +94,10 @@ const InvoiceDetails = () => {
     }
     return (
         <>
-            <Box pt={['126px', '126px', '126px', '72px', '72px']} pb={['54px']}>
+            <Box
+                pt={['126px', '126px', '126px', '72px', '72px']}
+                pb={['96px', '96px', '54px']}
+            >
                 <DeleteModal
                     id={id}
                     isOpen={isOpen}
@@ -79,9 +109,11 @@ const InvoiceDetails = () => {
                         align={['center']}
                         borderRadius={'8px'}
                         bgColor={cardBgColor}
-                        h={['88px']}
+                        minH={['88px']}
                         justify={['space-between']}
                         px={['24px', '32px']}
+                        gap={{ sm: '16px' }}
+                        flexWrap={{ sm: 'wrap', md: 'nowrap' }}
                     >
                         <Flex
                             align={['center']}
@@ -101,37 +133,7 @@ const InvoiceDetails = () => {
                             align={['center']}
                             display={['none', 'flex']}
                         >
-                            <Button
-                                variant={'secondary'}
-                                onClick={() =>
-                                    navigate(`/edit/invoice/${invoice.id}`)
-                                }
-                            >
-                                Edit
-                            </Button>
-                            <Button
-                                variant='delete'
-                                onClick={() => setIsOpen(true)}
-                            >
-                                Delete
-                            </Button>
-                            <Button
-                                onClick={() =>
-                                    generatePDF(`invoice-${invoice.id}`)
-                                }
-                            >
-                                Download as pdf
-                            </Button>
-                            <Button
-                                onClick={() => handleMarkAsPaid(invoice)}
-                                _hover={{}}
-                                _disabled={{
-                                    bgColor: 'gray',
-                                    cursor: 'not-allowed',
-                                }}
-                            >
-                                Mark as Paid
-                            </Button>
+                            <ButtonGroup />
                         </Flex>
                     </Flex>
                     <Flex
@@ -487,27 +489,12 @@ const InvoiceDetails = () => {
                 display={['flex', 'none']}
                 bgColor={cardBgColor}
                 w='100vw'
-                ml='-24px'
+                // ml='-24px'
+                position='fixed'
+                bottom={0}
+                left={0}
             >
-                <Button
-                    variant={'secondary'}
-                    onClick={() => navigate(`/edit/invoice/${invoice.id}`)}
-                >
-                    Edit
-                </Button>
-                <Button variant='delete' onClick={() => setIsOpen(true)}>
-                    Delete
-                </Button>
-                <Button
-                    _hover={{}}
-                    _disabled={{
-                        bgColor: 'gray',
-                        cursor: 'not-allowed',
-                    }}
-                    onClick={() => handleMarkAsPaid(invoice)}
-                >
-                    Mark as Paid
-                </Button>
+                <ButtonGroup />
             </Flex>
         </>
     )

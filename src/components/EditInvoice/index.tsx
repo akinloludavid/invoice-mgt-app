@@ -38,7 +38,7 @@ const EditInvoice = () => {
     const draftColor = useColorModeValue('#7E88C3', '#DFE3FA')
     const borderColor = useColorModeValue(
         '1px solid #DFE3FA',
-        '1px solid #252945',
+        '1px solid #E4EBFA',
     )
     const errorBorder = '1px solid #EC5757'
 
@@ -167,18 +167,19 @@ const EditInvoice = () => {
         <Box w={'100%'} outline='none' h={'full'} bgColor='#00000030'>
             <Box
                 px={['0', '56px']}
+                pt={['120px', '120px', '120px', '56px']}
                 overflowY='scroll'
                 bgColor={formBgColor}
                 borderRadius='0 20px 20px 0'
                 tabIndex={1}
             >
+                <GoBack />
                 <Heading
                     fontSize={['24px']}
                     fontWeight='700'
                     lineHeight={'32px'}
                     color={boldTextColor}
                     mb={['48px']}
-                    mt={['120px', '120px', '120px', '56px']}
                     as='h2'
                     data-testid='edit-invoice-heading'
                 >

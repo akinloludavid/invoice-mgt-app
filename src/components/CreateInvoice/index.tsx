@@ -34,7 +34,7 @@ const CreateInvoice = () => {
     const placeHolderColor = useColorModeValue('#0C0E1640', '#ffffff')
     const borderColor = useColorModeValue(
         '1px solid #DFE3FA',
-        '1px solid #252945',
+        '1px solid #E4EBFA',
     )
 
     const { successAlert } = useCustomToast()

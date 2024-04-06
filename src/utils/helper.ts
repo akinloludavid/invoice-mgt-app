@@ -30,6 +30,6 @@ export const generatePDF = (id: string) => {
             orientation: 'portrait',
         })
         pdf.addImage(imgData, 'JPEG', 0, 0.5, 8, 9, 'MEDIUM')
-        pdf.save(`${id}.pdf`)
+        pdf.save(`${id}-${new Date().toDateString()}.pdf`)
     })
 }
